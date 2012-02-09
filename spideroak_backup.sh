@@ -67,27 +67,31 @@ if [ ! -d "$backupCurrent/mysql" ]; then
         mkdir "$backupCurrent/mysql"
 fi
 
-echo "-----"
-echo -ne "Exporting MongoDB collections ... "
-mongodump -h $mongoHost -u $mongoUser -p $mongoPass -o "$backupCurrent/mongodb" 2>"$temp" >/dev/null
-tar -cjf "$backupCurrent/mongodb.tar.bz2" "$backupCurrent/mongodb/"* 2>"$temp"
-rm -R "$backupCurrent/mongodb/"*
-mv "$backupCurrent/mongodb.tar.bz2" "$backupCurrent/mongodb/mongodb.tar.bz2"
-echo "Done."
+if [ -z $mongoUser ] && [ -z $mongoPass ]; then
+	echo "-----"
+	echo -ne "Exporting MongoDB collections ... "
+	mongodump -h $mongoHost -u $mongoUser -p $mongoPass -o "$backupCurrent/mongodb" 2>"$temp" >/dev/null
+	tar -cjf "$backupCurrent/mongodb.tar.bz2" "$backupCurrent/mongodb/"* 2>"$temp"
+	rm -R "$backupCurrent/mongodb/"*
+	mv "$backupCurrent/mongodb.tar.bz2" "$backupCurrent/mongodb/mongodb.tar.bz2"
+	echo "Done."
+fi
 
-echo "-----"
-echo -ne "Preparing to backup MySQL ... "
-databases=( $(mysql -u"$mysqlUser" -p"$mysqlPass" --skip-column-names --batch -e "show databases;" 2>"$temp") );
-echo "found ${#databases[@]} databases.";
+if [ -z $mysqlUser ] && [ -z $mysqlPass ]; then
+	echo "-----"
+	echo -ne "Preparing to backup MySQL ... "
+	databases=( $(mysql -u"$mysqlUser" -p"$mysqlPass" --skip-column-names --batch -e "show databases;" 2>"$temp") );
+	echo "found ${#databases[@]} databases.";
 
-for i in ${databases[@]}; do
-        if [ $i != "information_schema" ] && [ $i != "mysql" ] && [ $i != "phpmyadmin" ]; then
-                echo -ne "Optimizing and backing up database $i ... "
-                mysql -u"$mysqlUser" -p"$mysqlPass" -D "$i" --skip-column-names --batch -e "optimize table $i" 2>"$temp" >/dev/null
-                mysqldump -u"$mysqlUser" -p"$mysqlPass" --opt $i | bzip2 -c > "$backupCurrent/mysql/$i.sql.bz2"
-                echo "Done."
-        fi
-done
+	for i in ${databases[@]}; do
+	        if [ $i != "information_schema" ] && [ $i != "mysql" ] && [ $i != "phpmyadmin" ]; then
+	                echo -ne "Optimizing and backing up database $i ... "
+	                mysql -u"$mysqlUser" -p"$mysqlPass" -D "$i" --skip-column-names --batch -e "optimize table $i" 2>"$temp" >/dev/null
+	                mysqldump -u"$mysqlUser" -p"$mysqlPass" --opt $i | bzip2 -c > "$backupCurrent/mysql/$i.sql.bz2"
+	                echo "Done."
+	        fi
+	done
+fi
 
 echo "-----"
 for f in "${folders[@]}"
@@ -113,14 +117,14 @@ if [ ! -s $temp ]; then
         rm -f "$temp"
 fi
 
-if [ gitCommit ]; then
+if [ -z $gitCommit ]; then
 	cd $backup
 	echo "-----"
-	echo "Commiting changes to git ... "
+	echo "Committing changes to git ... "
 	git add .
 	git commit -m "Backup $stamp"
 
-	if [ gitPush ]; then
+	if [ -z $gitPush ]; then
 		git push $gitPush
 	fi
 
