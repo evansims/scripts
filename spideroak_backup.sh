@@ -41,14 +41,14 @@
 	# Your $backup directory will be filled with folders labled 01 through 31
 	# representing each day of the month.
 	#stamp=$(date -u +%d)
-	#backup=$backup$stamp
+	#backupCurrent=$backup$stamp
 
 	# OR uncomment the following lines for unlimited backups.
 	# Your $backup directory will have a new folder created for each day
 	# a backup is built. Keep an eye on space usage if you're going to use
 	#this method.
 	#stamp=$(date -u +%F)
-	#backup=$backup$stamp
+	#backupCurrent=$backup$stamp
 
 ##### END OF CONFIGURATION ####
 
