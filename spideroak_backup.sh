@@ -134,6 +134,7 @@ fi
 echo "-----"
 echo -ne "Pushing data to SpiderOak ... "
 
+SpiderOak --include-dir="$backup" 2> "$temp" >/dev/null
 SpiderOak --empty-garbage-bin 2>"$temp" >/dev/null
 SpiderOak --batchmode 2>"$temp" >/dev/null
 SpiderOak --purge-historical-versions all 2>"$temp" >/dev/null
