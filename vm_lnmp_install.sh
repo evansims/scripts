@@ -7,8 +7,10 @@ if [[ $EUID -ne 0 ]]; then
 	exit 1
 fi
 
+export DEBIAN_FRONTEND=noninteractive
+
 apt-get update
-apt-get -y install ufw time bc build-essential autoconf2.13 libssl-dev libcurl4-gnutls-dev libjpeg62-dev libpng12-dev libmysql++-dev libfreetype6-dev libt1-dev libc-client-dev mysql-client libevent-dev libxml2-dev libtool libmcrypt-dev php5-dev libbz2-dev python-software-properties mlocate sendmail
+apt-get -y install ufw time bc build-essential autoconf2.13 libssl-dev libcurl4-gnutls-dev libjpeg62-dev libpng12-dev libmysql++-dev libfreetype6-dev libt1-dev libc-client-dev mysql-client libevent-dev libxml2-dev libtool libmcrypt-dev php5-dev libbz2-dev python-software-properties mlocate
 apt-get -y upgrade
 
 # Update locate
@@ -51,7 +53,7 @@ CFLAGS="-Os -pipe -march=nocona -msse -mmmx -msse2 -msse3 -mfpmath=sse -fomit-fr
 make
 make install
 
-cp sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm
+cp ~/src/php-5.3.9/sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm
 chmod 755 /etc/init.d/php-fpm
 update-rc.d -f php-fpm defaults
 
@@ -116,10 +118,10 @@ wget -O /usr/etc/mysqlnd_ms_plugin.ini https://raw.github.com/evansims/scripts/m
 echo "<?php phpinfo(); ?>" >> /usr/share/nginx/www/phpinfo.php
 
 # Restart services.
-/etc/init.d/php-fpm stop
 /etc/init.d/nginx stop
 /etc/init.d/php-fpm start
 /etc/init.d/nginx start
 
 echo "Setup complete."
+echo "  WARNING: Your SSH port has been changed to 2008."
 echo "  You should run mysql_secure_installation"
