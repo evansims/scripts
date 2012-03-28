@@ -118,6 +118,7 @@ wget -O /usr/lib/php.ini https://raw.github.com/evansims/scripts/master/php/php.
 wget -O /usr/etc/php-fpm.conf https://raw.github.com/evansims/scripts/master/php/php-fpm.conf
 wget -O /usr/etc/mysqlnd_ms_plugin.ini https://raw.github.com/evansims/scripts/master/php/mysqlnd_ms_plugin.ini
 
+touch /usr/share/nginx/www/phpinfo.php
 echo "<?php phpinfo(); ?>" >> /usr/share/nginx/www/phpinfo.php
 
 # Restart services.
