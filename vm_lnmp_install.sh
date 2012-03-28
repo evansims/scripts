@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# Install Nginx, MySQL and PHP on Ubuntu (and compatible)
+# Install Nginx, MySQL and PHP on Ubuntu 10.04 LTS (and compatible)
+# Run: wget -O - https://raw.github.com/evansims/scripts/master/vm_lnmp_install.sh | bash
 
 if [[ $EUID -ne 0 ]]; then
 	echo "This script should be run as root" 1>&2
@@ -10,7 +11,7 @@ fi
 export DEBIAN_FRONTEND=noninteractive
 
 apt-get update
-apt-get -y install ufw time bc build-essential autoconf2.13 libssl-dev libcurl4-gnutls-dev libjpeg62-dev libpng12-dev libmysql++-dev libfreetype6-dev libt1-dev libc-client-dev mysql-client libevent-dev libxml2-dev libtool libmcrypt-dev php5-dev libbz2-dev python-software-properties mlocate
+apt-get -y install ufw time bc build-essential autoconf2.13 libssl-dev libcurl4-gnutls-dev libjpeg62-dev libpng12-dev libmysql++-dev libfreetype6-dev libt1-dev libc-client-dev mysql-client libevent-dev libxml2-dev libtool libmcrypt-dev php5-dev libbz2-dev python-software-properties mlocate git-core
 apt-get -y upgrade
 
 # Update locate
@@ -18,19 +19,21 @@ updatedb
 
 # Set Timezone to Chicago
 echo "America/Chicago" | sudo tee /etc/timezone
-sudo dpkg-reconfigure --frontend noninteractive tzdata
+dpkg-reconfigure --frontend noninteractive tzdata
 
 # Move SSH port off 22 to avoid brute force attacks.
-sudo ufw reset
-sudo ufw default deny
+ufw --force reset
+ufw default deny incoming
+ufw default allow outgoing
+
 sed -i 's/Port 22/Port 2008/' /etc/ssh/sshd_config
 sed -i 's/IPV6=no/IPV6=yes/' /etc/default/ufw
 /etc/init.d/ssh restart
-sudo ufw allow 7 # Echo
-sudo ufw allow 2008 # SSH
-sudo ufw allow 80/tcp # HTTP
-sudo ufw allow 443/tcp # HTTPS
-sudo ufw enable
+ufw allow 7 # Echo
+ufw allow 2008/tcp # SSH
+ufw allow 80/tcp # HTTP
+ufw allow 443/tcp # HTTPS
+ufw --force enable
 
 # Install Nginx
 add-apt-repository ppa:nginx/stable
