@@ -22,9 +22,9 @@ location ~ \.php {
 
 	fastcgi_param   REDIRECT_STATUS         200;
 
-    fastcgi_split_path_info ^(.*\.php)(.*)$;
-    fastcgi_param PATH_INFO         $fastcgi_path_info;
+	fastcgi_split_path_info ^(.*\.php)(.*)$;
+	fastcgi_param   PATH_INFO               $fastcgi_path_info;
 
-    fastcgi_index index.php;
-    fastcgi_pass 127.0.0.1:9000;
+	fastcgi_index index.php;
+	fastcgi_pass 127.0.0.1:9000;
 }
