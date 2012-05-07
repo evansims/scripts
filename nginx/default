@@ -1,14 +1,12 @@
 server {
-        listen [::]:80 default;
+	listen 80 default;
 
-        root /usr/share/nginx/www;
-        index index.php index.html index.htm;
+	root /usr/share/nginx/www;
 
-        try_files $uri $uri/ @default;
+	location / {
+		index index.php index.html index.htm;
+		try_files $uri $uri/ /index.php$uri?$args;
+	}
 
-        include php_support;
-
-        location @default {
-                rewrite ^/(.*)$ /index.php/$1 last;
-        }
+	include php_support;
 }
