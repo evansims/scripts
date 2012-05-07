@@ -1,0 +1,27 @@
+# General defaults.
+startup_message off
+autodetach on
+vbell off
+
+# Open htop in tab 0 by default.
+shelltitle "shell"
+screen -t "htop" 0 htop
+screen -t "shell" 1
+
+# More colors.
+term screen-256color
+
+# Fix text ghosting.
+altscreen on
+
+# Set line buffer.
+defscrollback 2000
+
+# Stylize.
+hardstatus alwayslastline "%-Lw%{+b kc}%50>%n%f* %t%{-}%+Lw%<"
+caption always "%{= ck}%H > %t %= %Y-%m-%d | %c"
+termcapinfo  * '' 'hs:ts=\E_:fs=\E\\:ds=\E_\E\\'
+
+# Use backtick key as command prefix.
+defescape ``
+escape ``
