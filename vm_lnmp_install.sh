@@ -106,6 +106,17 @@ CFLAGS="-Os -pipe -march=nocona -msse -mmmx -msse2 -msse3 -mfpmath=sse -fomit-fr
 make
 make install
 
+# Install memcached
+apt-get install memcached
+wget http://pecl.php.net/get/memcache-2.2.6.tgz
+tar -zxf memcache-2.2.6.tgz
+rm memcache-2.2.6.tgz
+cd memcache-2.2.6
+phpize
+CFLAGS="-Os -pipe -march=nocona -msse -mmmx -msse2 -msse3 -mfpmath=sse -fomit-frame-pointer -funroll-loops" ./configure --enable-memcache
+make
+make install
+
 # Update configurations.
 rm /etc/nginx/sites-enabled/default
 wget -O /etc/nginx/sites-enabled/default https://raw.github.com/evansims/scripts/master/nginx/default
