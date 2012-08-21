@@ -21,6 +21,10 @@ updatedb
 echo "America/Chicago" | sudo tee /etc/timezone
 dpkg-reconfigure --frontend noninteractive tzdata
 
+# Install full localization support.
+sudo cp /usr/share/i18n/SUPPORTED /var/lib/locales/supported.d/local
+sudo locale-gen
+
 # Move SSH port off 22 to avoid brute force attacks.
 ufw --force reset
 ufw default deny incoming
