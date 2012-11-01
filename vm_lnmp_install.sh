@@ -11,7 +11,7 @@ fi
 export DEBIAN_FRONTEND=noninteractive
 
 apt-get update
-apt-get -y install ufw time bc build-essential autoconf2.13 libssl-dev libcurl4-gnutls-dev libjpeg62-dev libpng12-dev libmysql++-dev libfreetype6-dev libt1-dev libc-client-dev mysql-client libevent-dev libxml2-dev libtool libmcrypt-dev php5-dev libbz2-dev python-software-properties mlocate git-core
+apt-get -y install ufw time bc build-essential autoconf2.13 libssl-dev libcurl4-gnutls-dev libjpeg62-dev libpng12-dev libmysql++-dev libfreetype6-dev libt1-dev libc-client-dev mysql-client libevent-dev libxml2-dev libtool libmcrypt-dev php5-dev libbz2-dev python-software-properties mlocate git-core tcptrack byobu
 apt-get -y upgrade
 
 # Update locate
