@@ -98,7 +98,6 @@ sudo /sbin/ldconfig
 # Configure nginx
 sudo cp /etc/nginx/nginx.conf /etc/nginx/nginx.custom.conf
 sudo sed -i "s/worker_processes  1;/worker_processes $CORES;/" /etc/nginx/nginx.custom.conf
-sudo sed -i "s/    worker_connections  1024;/    worker_connections 2048;/" /etc/nginx/nginx.custom.conf
 
 # Install init.d script
 sudo wget https://raw.github.com/JasonGiedymin/nginx-init-ubuntu/master/nginx -O /etc/init.d/nginx
@@ -111,5 +110,8 @@ sudo update-rc.d -f nginx defaults
 
 sudo mkdir /var/lib/nginx
 sudo mkdir /var/lib/nginx/body
+sudo mkdir /etc/nginx/conf.d
+sudo mkdir /var/cache/nginx
+sudo mkdir /var/cache/nginx/ngx_pagespeed_cache
 
 sudo service nginx start
