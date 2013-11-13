@@ -28,7 +28,7 @@ wget http://download.savannah.gnu.org/releases/libunwind/libunwind-0.99-beta.tar
 tar -xzvf libunwind-0.99-beta.tar.gz
 rm libunwind-0.99-beta.tar.gz
 cd libunwind-0.99-beta
-sudo ./configure CFLAGS="-U_FORTIFY_SOURCE -pipe -march=nocona -mtune=i686 -O2 -msse -mmmx -msse2 -msse3 -mfpmath=sse" && sudo make && sudo checkinstall --pkgversion=0.99 --default
+sudo ./configure sudo make && sudo checkinstall --pkgversion=0.99 --default
 
 # Grab Google's Performance Tools library.
 cd ~/src
@@ -36,7 +36,7 @@ wget https://gperftools.googlecode.com/files/gperftools-2.0.tar.gz
 tar -xzvf gperftools-2.0.tar.gz
 rm gperftools-2.0.tar.gz
 cd gperftools-2.0
-sudo ./configure CFLAGS="-pipe -march=nocona -mtune=i686 -O2 -msse -mmmx -msse2 -msse3 -mfpmath=sse" && sudo make && sudo checkinstall --default
+sudo ./configure sudo make && sudo checkinstall --default
 
 # Grab Google's Pagespeed module.
 cd ~/src
@@ -66,7 +66,6 @@ sudo ./configure \
 --http-proxy-temp-path=/var/lib/nginx/proxy \
 --http-fastcgi-temp-path=/var/lib/nginx/fastcgi \
 --lock-path=/var/lock/nginx.lock \
---with-cc-opt="-pipe -march=nocona -O2 -msse -mmmx -msse2 -msse3 -mfpmath=sse" \
 --with-rtsig_module \
 --without-select_module \
 --without-poll_module \
