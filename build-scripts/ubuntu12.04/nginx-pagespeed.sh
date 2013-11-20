@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Customize your build flags here.
 export CFLAGS="-pipe -march=nocona -mtune=i686 -O2 -msse -mmmx -msse2 -msse3 -mfpmath=sse"
 
