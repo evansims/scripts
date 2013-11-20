@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # Customize your build flags here.
 export CFLAGS="-pipe -march=nocona -mtune=i686 -O2 -msse -mmmx -msse2 -msse3 -mfpmath=sse"
 
@@ -9,8 +7,11 @@ if ! [[ "$CORES" =~ ^[0-9]+$ ]] || [[ "$CORES" -lt 1 ]]; then
         CORES=1
 fi
 
-sudo apt-get update && sudo apt-get upgrade && sudo apt-get autoremove && sudo apt-get autoclean
-apt-get install htop unzip git build-essential libpcre3 libpcre3-dev libssl-dev checkinstall automake
+sudo apt-get update
+sudo apt-get -y upgrade
+sudo apt-get autoremove
+sudo apt-get autoclean
+sudo apt-get -y install htop unzip git build-essential libpcre3 libpcre3-dev libssl-dev checkinstall automake
 mkdir ~/src
 
 # Grab upload progress module.
@@ -28,7 +29,9 @@ wget http://download.savannah.gnu.org/releases/libunwind/libunwind-0.99-beta.tar
 tar -xzvf libunwind-0.99-beta.tar.gz
 rm libunwind-0.99-beta.tar.gz
 cd libunwind-0.99-beta
-sudo ./configure sudo make && sudo checkinstall --pkgversion=0.99 --default
+sudo ./configure
+sudo make
+sudo checkinstall --pkgversion=0.99 --default
 
 # Grab Google's Performance Tools library.
 cd ~/src
@@ -36,7 +39,9 @@ wget https://gperftools.googlecode.com/files/gperftools-2.0.tar.gz
 tar -xzvf gperftools-2.0.tar.gz
 rm gperftools-2.0.tar.gz
 cd gperftools-2.0
-sudo ./configure sudo make && sudo checkinstall --default
+sudo ./configure --enable-frame-pointers
+sudo make
+sudo checkinstall --default
 
 # Grab Google's Pagespeed module.
 cd ~/src
@@ -90,7 +95,9 @@ sudo ./configure \
 --add-module=$HOME/src/nginx-upload-progress-module \
 --add-module=$HOME/src/headers-more-nginx-module/ \
 --add-module=$HOME/src/nginx-upstream-fair/ \
---add-module=$HOME/src/ngx_pagespeed-release-1.5.27.3-beta && sudo make && sudo checkinstall --default
+--add-module=$HOME/src/ngx_pagespeed-release-1.5.27.3-beta
+sudo make
+sudo checkinstall --default
 
 sudo /sbin/ldconfig
 
