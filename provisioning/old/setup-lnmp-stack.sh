@@ -1,7 +1,15 @@
 #!/bin/bash
 
+# -----------------------------------------
+# DANGER DANGER DANGER DANGER DANGER DANGER
+# -----------------------------------------
+# This script is OLD and no longer relevant.
+# I do not recommend using it as-is, but am
+# keeping it around for education/reference
+# purposes. You've been warned.
+#
 # Install Nginx, MySQL and PHP on Ubuntu 10.04 LTS (and compatible)
-# Run: wget -O - https://raw.github.com/evansims/scripts/master/vm_lnmp_install.sh | bash
+#
 
 if [[ $EUID -ne 0 ]]; then
 	echo "This script should be run as root" 1>&2
@@ -54,9 +62,7 @@ wget -O php.tar.gz http://us.php.net/get/php-5.3.9.tar.gz/from/this/mirror
 tar -xzf php.tar.gz
 rm php.tar.gz
 cd php-5.3.9
-
-CFLAGS="-Os -pipe -march=nocona -msse -mmmx -msse2 -msse3 -mfpmath=sse -fomit-frame-pointer -funroll-loops" ./configure --enable-cgi --enable-fpm --with-mcrypt --enable-mbstring --with-openssl --with-mysql=mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-gd --enable-gd-native-ttf --with-jpeg-dir=/usr/lib --with-libxml-dir=/usr/lib --with-curl --with-imap --with-imap-ssl --enable-zip --with-bz2 --enable-sockets --with-zlib --enable-exif --enable-ftp --with-iconv --with-gettext --with-t1lib=/usr --with-freetype-dir=/usr --prefix=/usr --with-fpm-user=www-data --with-fpm-group=www-data --enable-inline-optimization --disable-debug --enable-zend-multibyte --with-kerberos
-
+./configure --enable-cgi --enable-fpm --with-mcrypt --enable-mbstring --with-openssl --with-mysql=mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-gd --enable-gd-native-ttf --with-jpeg-dir=/usr/lib --with-libxml-dir=/usr/lib --with-curl --with-imap --with-imap-ssl --enable-zip --with-bz2 --enable-sockets --with-zlib --enable-exif --enable-ftp --with-iconv --with-gettext --with-t1lib=/usr --with-freetype-dir=/usr --prefix=/usr --with-fpm-user=www-data --with-fpm-group=www-data --enable-inline-optimization --disable-debug --enable-zend-multibyte --with-kerberos
 make
 make install
 
@@ -79,8 +85,7 @@ tar -zxf apc.tgz
 rm apc.tgz
 cd APC-3.1.9
 phpize
-CFLAGS="-Os -pipe -march=nocona -msse -mmmx -msse2 -msse3 -mfpmath=sse -fomit-frame-pointer -funroll-loops" ./configure --enable-apc --enable-apc-mmap
-
+./configure --enable-apc --enable-apc-mmap
 make
 make install
 
@@ -91,9 +96,7 @@ tar -xzf suhosin-0.9.33.tgz
 rm suhosin-0.9.33.tgz
 cd suhosin-0.9.33/
 phpize
-
-CFLAGS="-Os -pipe -march=nocona -msse -mmmx -msse2 -msse3 -mfpmath=sse -fomit-frame-pointer -funroll-loops" ./configure --enable-suhosin
-
+./configure --enable-suhosin
 make
 make install
 
@@ -104,9 +107,7 @@ tar -xzf mysqlnd_ms-1.2.2.tgz
 rm mysqlnd_ms-1.2.2.tgz
 cd mysqlnd_ms-1.2.2/
 phpize
-
-CFLAGS="-Os -pipe -march=nocona -msse -mmmx -msse2 -msse3 -mfpmath=sse -fomit-frame-pointer -funroll-loops" ./configure --enable-mysqlnd-ms
-
+./configure --enable-mysqlnd-ms
 make
 make install
 
@@ -117,7 +118,7 @@ tar -zxf memcache-2.2.6.tgz
 rm memcache-2.2.6.tgz
 cd memcache-2.2.6
 phpize
-CFLAGS="-Os -pipe -march=nocona -msse -mmmx -msse2 -msse3 -mfpmath=sse -fomit-frame-pointer -funroll-loops" ./configure --enable-memcache
+./configure --enable-memcache
 make
 make install
 
