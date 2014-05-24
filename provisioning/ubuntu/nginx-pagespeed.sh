@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Build Nginx from source w/ Pagespeed, Google Performance Tools, More Headers, Fair Upstream and Upload Progress modules.
+
 # Customize your build flags here.
 export CFLAGS="-pipe -march=nocona -mtune=i686 -O2 -msse -mmmx -msse2 -msse3 -mfpmath=sse"
 
