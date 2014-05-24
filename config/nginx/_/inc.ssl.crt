@@ -1,0 +1,17 @@
+listen 443 ssl;      # IPv4 HTTPS
+listen [::]:443 ssl; # IPv6 HTTPS
+
+ssl_session_cache builtin:1000 shared:SSL:10m;
+ssl_session_timeout 5m;
+
+# SSL w/ Perfect Forward Secrecy and backwards compatibility.
+
+  ssl_protocols SSLv3 TLSv1 TLSv1.1 TLSv1.2;
+  ssl_prefer_server_ciphers on;
+  ssl_ciphers "DHE-RSA-CAMELLIA256-SHA:DHE-RSA-AES256-SHA:ECDHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA:DES-CBC3-SHA:!ADH:!aNULL;";
+
+# Enable OSCP Stapling
+# http://blog.mozilla.org/security/2013/07/29/ocsp-stapling-in-firefox/
+
+  resolver 8.8.8.8;
+  ssl_stapling on;

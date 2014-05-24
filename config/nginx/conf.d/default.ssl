@@ -1,0 +1,39 @@
+###############################################################################
+# TODO Generate a certificate for your domain.
+#
+# 0. sudo apt-get update && sudo apt-get install openssl libssl1.0.0
+#    This will grab the latest OpenSSL libraries for you.
+#    The latest is not always the greatest, but in the case of the recent
+#    Heartbleed bug you want to makes ure you're running a patched version
+#    of OpenSSL.
+#
+# 1. $ sudo mkdir -p /etc/nginx/ssl && cd /etc/nginx/ssl
+#
+# 2. $ sudo openssl dhparam -out default.pem 2048
+#    You could choose to use 1024 for better compatibility with old software.
+#
+# 3. $ sudo openssl genrsa -out default.key 4096
+#    This will be your private signing key.
+#
+# 4. $ sudo openssl req -new -sha256 -key default.key -out default.csr
+#    This will be your public signing key.
+#
+#    You'll be asked to fill out a number of fields.
+#    Enter your two-letter country code (i.e. US), state or province,
+#    city and organization name. For the Common Name, use the domain
+#    you'll be using this key for; i.e. www.default.com.
+#
+#    **DO NOT** enter a challenge password for this key.
+#
+# 5. If you're going to have a Certificate Authority sign your certificate,
+#    then **SKIP THIS STEP**. This will generate a self-signed certificate which
+#    is free, but will raise warnings to visitors.
+#
+#    $ sudo openssl x509 -req -in default.csr -signkey default.key -out default.crt
+#
+###############################################################################
+
+ssl_certificate ssl/default.crt;
+ssl_certificate_key ssl/default.key;
+ssl_trusted_certificate ssl/default.crt;
+ssl_dhparam ssl/default.pem;
